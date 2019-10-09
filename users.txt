@@ -1,0 +1,4 @@
+Username    |   Password
+pemimpin    |   1
+tatausaha   |   1
+pegawai     |   1

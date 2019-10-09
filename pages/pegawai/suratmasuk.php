@@ -1,0 +1,51 @@
+<?php
+  $daftar = dbmanager::getDataQ("SELECT * FROM suratmasuk JOIN sifat USING(idSifat) WHERE idDisposisi=1 AND idUser={$user[0]['idUser']}");
+  foreach ($daftar as $dt) {
+    if($dt['idBacaP']==2){
+      $i = "style='background:#d6d6d6'";
+      $a = "<span style='color:red'>*</span>";
+    }
+    $status = ($dt['idStts']==1)?"Diterima":"Pendding";
+    $data .= "
+      <tr $i>
+        <th scope='row'>{$dt['noRegister']}$a</th>
+        <td>{$dt['tglMasuk']}</td>
+        <td>{$dt['asal']}</td>
+        <td>{$dt['perihal']}</td>
+        <td>{$dt['sifat']}</td>
+        <td>$status</td>
+        <td>
+          <a href='?page=form&id={$dt['noRegister']}' class='btn btn-secondary btn-sm'>Lihat</a>
+        </td>
+      </tr>
+    ";
+  }
+  $content = template::breadcrumb("Beranda:index.php,Surat Masuk:?page=daftarsurat")."
+  <!-- Daftar Surat Masuk / Table-->
+  <div class='card'>
+    <div class='card-header'>
+      <h4>SURAT MASUK</h4>
+    </div>
+    <div class='card-body'>
+      <div class='table-responsive'>
+        <table class='table table-striped table-hover table-bordered text-center'>
+          <thead>
+            <tr>
+              <th style='width:150px'>No Register</th>
+              <th>Tanggal</th>
+              <th>Asal</th>
+              <th>Perihal</th>
+              <th>Sifat</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            $data
+          </tbody>
+        </table>
+      </div>  
+    </div>
+  </div>
+  ";
+?>
